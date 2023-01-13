@@ -188,6 +188,19 @@ namespace TypewiseAlert.Test
         }
 
         [Fact]
+        public void Test_Email_TriggeredProcess_Normal()
+        {
+            //Arrange
+            Email email = new Email(AlterterType.BreachType.NORMAL);
+            bool actual = email.IsProcesstriggered();
+            //Act
+            email.Triggerprocess();
+            bool expected = email.IsProcesstriggered();
+            //Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
         public void Test_Email_SendEmailForTooLow()
         {
             //Arrange

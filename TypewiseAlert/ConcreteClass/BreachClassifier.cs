@@ -1,4 +1,5 @@
-﻿using TypewiseAlert.Interface;
+﻿using System;
+using TypewiseAlert.Interface;
 using TypewiseAlert.Model;
 
 namespace TypewiseAlert.ConcreteClass
@@ -26,7 +27,7 @@ namespace TypewiseAlert.ConcreteClass
         }
         public SampleData CheckPassiveCooling(CoolingType coolingType)
         {
-            sampleData = new SampleData() { lowerLimit = 0, upperLimit = 35 };
+            sampleData = new SampleData() { lowerLimit = (int)Enum.Parse(typeof(Temp_LowerLimit), coolingType.ToString()), upperLimit = (int)Enum.Parse(typeof(Temp_UpperLimit), coolingType.ToString()) };
 
             if (coolingType != CoolingType.PASSIVE_COOLING)
             {
@@ -36,7 +37,8 @@ namespace TypewiseAlert.ConcreteClass
         }
         public SampleData CheckHighActiveCooling(CoolingType coolingType)
         {
-            sampleData = new SampleData() { lowerLimit = 0, upperLimit = 45 };
+          
+            sampleData = new SampleData() { lowerLimit = (int)Enum.Parse(typeof(Temp_LowerLimit), coolingType.ToString()), upperLimit = (int)Enum.Parse(typeof(Temp_UpperLimit), coolingType.ToString()) };
 
             if (coolingType != CoolingType.HI_ACTIVE_COOLING)
             {
@@ -46,7 +48,7 @@ namespace TypewiseAlert.ConcreteClass
         }
         public SampleData CheckMedActiveCooling(CoolingType coolingType)
         {
-                sampleData = new SampleData() { lowerLimit = 0, upperLimit = 40 };
+                sampleData = new SampleData() { lowerLimit = (int)Enum.Parse(typeof(Temp_LowerLimit), coolingType.ToString()), upperLimit = (int)Enum.Parse(typeof(Temp_UpperLimit), coolingType.ToString()) };
                 return sampleData;
         }
 

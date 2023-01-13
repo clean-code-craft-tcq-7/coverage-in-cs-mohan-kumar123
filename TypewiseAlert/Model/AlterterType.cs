@@ -25,4 +25,17 @@ namespace TypewiseAlert
         TO_CONTROLLER,
         TO_EMAIL
     };
+
+    public enum Temp_UpperLimit
+    {
+        PASSIVE_COOLING = 35,
+        HI_ACTIVE_COOLING = 45,
+        MED_ACTIVE_COOLING = 40
+    }
+    public enum Temp_LowerLimit
+    {
+        PASSIVE_COOLING = 0,
+        HI_ACTIVE_COOLING = 0,
+        MED_ACTIVE_COOLING = 0
+    }
 }
