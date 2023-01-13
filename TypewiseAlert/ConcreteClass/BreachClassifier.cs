@@ -27,8 +27,7 @@ namespace TypewiseAlert.ConcreteClass
         }
         public SampleData CheckPassiveCooling(CoolingType coolingType)
         {
-            sampleData = new SampleData() { lowerLimit = (int)Enum.Parse(typeof(Temp_LowerLimit), coolingType.ToString()), upperLimit = (int)Enum.Parse(typeof(Temp_UpperLimit), coolingType.ToString()) };
-
+            GetLimit(coolingType);
             if (coolingType != CoolingType.PASSIVE_COOLING)
             {
                 CheckHighActiveCooling(coolingType);
@@ -37,8 +36,7 @@ namespace TypewiseAlert.ConcreteClass
         }
         public SampleData CheckHighActiveCooling(CoolingType coolingType)
         {
-          
-            sampleData = new SampleData() { lowerLimit = (int)Enum.Parse(typeof(Temp_LowerLimit), coolingType.ToString()), upperLimit = (int)Enum.Parse(typeof(Temp_UpperLimit), coolingType.ToString()) };
+            GetLimit(coolingType);
 
             if (coolingType != CoolingType.HI_ACTIVE_COOLING)
             {
@@ -48,9 +46,13 @@ namespace TypewiseAlert.ConcreteClass
         }
         public SampleData CheckMedActiveCooling(CoolingType coolingType)
         {
-                sampleData = new SampleData() { lowerLimit = (int)Enum.Parse(typeof(Temp_LowerLimit), coolingType.ToString()), upperLimit = (int)Enum.Parse(typeof(Temp_UpperLimit), coolingType.ToString()) };
-                return sampleData;
+            GetLimit(coolingType);
+            return sampleData;
         }
 
+        private void GetLimit(CoolingType coolingType)
+        {
+            sampleData = new SampleData() { lowerLimit = (int)Enum.Parse(typeof(Temp_LowerLimit), coolingType.ToString()), upperLimit = (int)Enum.Parse(typeof(Temp_UpperLimit), coolingType.ToString()) };
+        }
     }
 }
