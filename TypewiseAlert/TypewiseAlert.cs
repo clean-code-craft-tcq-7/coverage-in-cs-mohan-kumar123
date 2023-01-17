@@ -8,8 +8,9 @@ namespace TypewiseAlert
     public class TypewiseAlert : ITypewiseAlert
     {
         public BreachType breachType = new BreachType();
-        public ProcessFactory processFactory = null;
-        public void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC)
+        public bool IsCheckActiviated = false;
+        public bool IsAlertActivated = false;
+        public void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC, ITriggerProcessor _triggerProcessor = null)
         {
             IBreach breach = new BreachClassifier();
              breachType = breach.classifyTemperatureBreach(batteryChar.coolingType, temperatureInC);
@@ -17,13 +18,14 @@ namespace TypewiseAlert
             switch (alertTarget)
             {
                 case AlertTarget.TO_CONTROLLER:
-                    processFactory = new ControllerFactory(breachType);
+                    _triggerProcessor.Triggerprocess();
+                    this.IsCheckActiviated = true;
                     break;
                 case AlertTarget.TO_EMAIL:
-                    processFactory = new EmailFactory(breachType);
+                    _triggerProcessor.Triggerprocess();
+                    this.IsAlertActivated = true;
                     break;
             }
-            processFactory.CreateProcessExecutor().Triggerprocess();
         }
     }
 }

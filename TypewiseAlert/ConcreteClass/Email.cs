@@ -9,10 +9,17 @@ namespace TypewiseAlert.ConcreteClass
     {
         private readonly AlterterType.BreachType _breachType;
         private bool IsEmailTriggered = false;
+        private readonly ITriggerProcessor _triggerProcessor;
         public Email(AlterterType.BreachType breachType)
         {
             _breachType = breachType;
         }
+
+        public Email(ITriggerProcessor triggerProcessor)
+        {
+            _triggerProcessor = triggerProcessor;
+        }
+
         public void Triggerprocess()
         {
             string recepient = "a.b@c.com";

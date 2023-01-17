@@ -115,42 +115,71 @@ namespace TypewiseAlert.Test
         #region TypewiseAlert_Test_Case
 
         [Fact]
+        public void Test_CheckAndAlert_Controller()
+        {
+            //Arrange
+            BatteryCharacter batteryChar = new BatteryCharacter();
+            TypewiseAlert typewiseAlert = new TypewiseAlert();
+            AlterterType.BreachType breachType = typewiseAlert.breachType;
+
+            var moq = new Mock<ITriggerProcessor>();
+            moq.Setup(mk => mk.Triggerprocess()).Verifiable();
+            moq.Setup(mk => mk.IsProcesstriggered()).Returns(true);
+            Controller controller = new Controller(moq.Object);
+
+            //Act
+            typewiseAlert.checkAndAlert(AlertTarget.TO_CONTROLLER, batteryChar, 36, moq.Object);
+
+            //Assert
+            Assert.NotEqual(typewiseAlert.breachType, breachType);
+            Assert.True(typewiseAlert.IsCheckActiviated);
+        }
+
+        [Fact]
         public void Test_checkAndAlert_CheckNotEqualOfBreachtype()
         {
             //Arrange
             BatteryCharacter batteryChar = new BatteryCharacter();
-            // TypewiseAlert.checkAndAlert(AlertTarget.TO_CONTROLLER, batteryChar, 1.0);
-            var moq = new Mock<ITypewiseAlert>();
+            Mock<ITriggerProcessor> moq = TypewiseAlertTest.MockForTrigers();
+            Email email = new Email(moq.Object);
+
             TypewiseAlert typewiseAlert = new TypewiseAlert();
             AlterterType.BreachType breachType = typewiseAlert.breachType;
 
             //Act
-            typewiseAlert.checkAndAlert(AlertTarget.TO_EMAIL, batteryChar, 36);
-            AlterterType.BreachType breachTypeResult = typewiseAlert.breachType;
-            //moq.Verify(sut => sut.checkAndAlert(AlertTarget.TO_CONTROLLER, batteryChar, 1.0));
+            typewiseAlert.checkAndAlert(AlertTarget.TO_EMAIL, batteryChar, 36, email);
 
             //Assert
-            Assert.NotEqual(breachType, breachTypeResult);
-        } 
-
-        [Fact]
-        public void Test_checkAndAlert_ControllerAlertChecker()
-        {
-            //Arrange
-            BatteryCharacter batteryChar = new BatteryCharacter();
-            var moq = new Mock<ITypewiseAlert>();
-            TypewiseAlert typewiseAlert = new TypewiseAlert();
-            typewiseAlert.processFactory = null;
-
-            //Act
-            typewiseAlert.checkAndAlert(AlertTarget.TO_CONTROLLER, batteryChar, 36);
-
-            //Assert
-            ITriggerProcessor triggerProcessor =  typewiseAlert.processFactory.CreateProcessExecutor();
-            Assert.True(triggerProcessor.GetBranchtype() == AlterterType.BreachType.TOO_HIGH);
-           // Assert.True(triggerProcessor.IsProcesstriggered());
-            
+            Assert.NotEqual(typewiseAlert.breachType, breachType);
+            Assert.True(typewiseAlert.IsAlertActivated);
         }
+
+        public static Mock<ITriggerProcessor> MockForTrigers()
+        {
+            var moq = new Mock<ITriggerProcessor>();
+            moq.Setup(mk => mk.Triggerprocess()).Verifiable();
+            moq.Setup(mk => mk.IsProcesstriggered()).Returns(true);
+            return moq;
+        }
+
+        //[Fact]
+        //public void Test_checkAndAlert_ControllerAlertChecker()
+        //{
+        //    //Arrange
+        //    BatteryCharacter batteryChar = new BatteryCharacter();
+        //    var moq = new Mock<ITypewiseAlert>();
+        //    TypewiseAlert typewiseAlert = new TypewiseAlert();
+        //    typewiseAlert.processFactory = null;
+
+        //    //Act
+        //    typewiseAlert.checkAndAlert(AlertTarget.TO_CONTROLLER, batteryChar, 36);
+
+        //    //Assert
+        //    ITriggerProcessor triggerProcessor =  typewiseAlert.processFactory.CreateProcessExecutor();
+        //    Assert.True(triggerProcessor.GetBranchtype() == AlterterType.BreachType.TOO_HIGH);
+        //   // Assert.True(triggerProcessor.IsProcesstriggered());
+
+        //}
         #endregion
 
         #region Controller_Test_Case
@@ -237,5 +266,8 @@ namespace TypewiseAlert.Test
             Assert.NotEqual(expected, actual);
         }
         #endregion
+
+      
+       
     }
 }

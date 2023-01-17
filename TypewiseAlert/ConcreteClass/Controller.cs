@@ -9,10 +9,21 @@ namespace TypewiseAlert.ConcreteClass
     {
         private readonly AlterterType.BreachType _breachType;
         private bool IsControllerTriggered = false;
+        private readonly ITriggerProcessor _triggerProcessor;
 
         public Controller(AlterterType.BreachType breachType)
         {
             _breachType = breachType;
+        }
+
+        public Controller()
+        {
+
+        }
+
+        public Controller(ITriggerProcessor triggerProcessor)
+        {
+            _triggerProcessor = triggerProcessor;
         }
 
         public AlterterType.BreachType GetBranchtype()
