@@ -122,9 +122,7 @@ namespace TypewiseAlert.Test
             TypewiseAlert typewiseAlert = new TypewiseAlert();
             AlterterType.BreachType breachType = typewiseAlert.breachType;
 
-            var moq = new Mock<ITriggerProcessor>();
-            moq.Setup(mk => mk.Triggerprocess()).Verifiable();
-            moq.Setup(mk => mk.IsProcesstriggered()).Returns(true);
+            Mock<ITriggerProcessor> moq = TypewiseAlertTest.MockForTrigers();
             Controller controller = new Controller(moq.Object);
 
             //Act
